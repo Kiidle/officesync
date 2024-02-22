@@ -137,6 +137,7 @@ class CreateLocationView(LoginRequiredMixin, generic.CreateView):
         Log.objects.create(
             user=self.request.user,
             action="CREATE",
+            category="DISPOSITION",
             content_object=self.object,
             message=f"@{self.request.user} hat den Standort {self.object.name} erstellt.",
         )
@@ -278,6 +279,7 @@ class UpdateLocationView(LoginRequiredMixin, generic.UpdateView):
         Log.objects.create(
             user=self.request.user,
             action="UPDATE",
+            category="DISPOSITION",
             content_object=self.object,
             message=f"@{self.request.user} hat den Standort {self.object.name} verändert.",
         )
@@ -360,6 +362,7 @@ class StationDeleteView(LoginRequiredMixin, generic.DeleteView):
         Log.objects.create(
             user=request.user,
             action="DELETE",
+            category="DISPOSITION",
             content_object=station,
             message=f"{request.user} hat den Standort '{old_station_name}' gelöscht.",
         )
@@ -501,6 +504,7 @@ class CreateVehicleView(LoginRequiredMixin, generic.CreateView):
         Log.objects.create(
             user=self.request.user,
             action="CREATE",
+            category="DISPOSITION",
             content_object=self.object,
             message=f"@{self.request.user} hat das Fahrzeug {self.object.license_plate} erstellt.",
         )
@@ -651,6 +655,7 @@ class UpdateVehicleView(LoginRequiredMixin, generic.UpdateView):
         Log.objects.create(
             user=self.request.user,
             action="CREATE",
+            category="DISPOSITION",
             content_object=self.object,
             message=f"@{self.request.user} hat das Fahrzeug {self.object.license_plate} erstellt.",
         )
@@ -733,6 +738,7 @@ class VehicleDeleteView(LoginRequiredMixin, generic.DeleteView):
         Log.objects.create(
             user=request.user,
             action="DELETE",
+            category="DISPOSITION",
             content_object=vehicle,
             message=f"{request.user} hat das Fahrzeug '{old_vehicle_name}' gelöscht.",
         )

@@ -60,9 +60,18 @@ class Log(models.Model):
         ("EDIT", "Bearbeiten"),
         ("DELETE", "Löschen"),
     )
+    CATEGORIES = (
+        ("SYSTEM", "System"),
+        ("ADMINISTRATION", "Administration"),
+        ("COMMUNICATION", "Kommunikation"),
+        ("MANAGEMENT", "Verwaltung"),
+        ("DISPOSITION", "Disposition"),
+        ("CLOUD", "Cloud"),
+    )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     action = models.CharField(max_length=10, choices=ACTION_CHOICES)
+    category = models.CharField(max_length=20, choices=CATEGORIES)
     timestamp = models.DateTimeField(default=timezone.now)
 
     content_type = models.ForeignKey(
