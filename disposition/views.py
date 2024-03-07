@@ -21,11 +21,14 @@ class ToursView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -53,8 +56,8 @@ class ToursView(LoginRequiredMixin, generic.ListView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -78,14 +81,17 @@ class LocationsView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_create_location_permission"] = self.has_create_location_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_create_location_permission"] = (
+                self.has_create_location_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -108,8 +114,8 @@ class LocationsView(LoginRequiredMixin, generic.ListView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -157,11 +163,14 @@ class CreateLocationView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -184,11 +193,11 @@ class CreateLocationView(LoginRequiredMixin, generic.CreateView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_create_location_permission(request.user):
-            return redirect("denied")
+            if not self.has_create_location_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -215,14 +224,17 @@ class LocationDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_update_location_permission"] = self.has_update_location_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_update_location_permission"] = (
+                self.has_update_location_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -250,8 +262,8 @@ class LocationDetailView(LoginRequiredMixin, generic.DetailView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -304,14 +316,17 @@ class UpdateLocationView(LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_delete_location_permission"] = self.has_delete_location_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_delete_location_permission"] = (
+                self.has_delete_location_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -334,11 +349,11 @@ class UpdateLocationView(LoginRequiredMixin, generic.UpdateView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_update_location_permission(request.user):
-            return redirect("denied")
+            if not self.has_update_location_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -385,11 +400,14 @@ class StationDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -412,11 +430,11 @@ class StationDeleteView(LoginRequiredMixin, generic.DeleteView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_delete_location_permission(request.user):
-            return redirect("denied")
+            if not self.has_delete_location_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -440,14 +458,17 @@ class VehiclesView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_create_vehicle_permission"] = self.has_create_vehicle_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_create_vehicle_permission"] = (
+                self.has_create_vehicle_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -470,8 +491,8 @@ class VehiclesView(LoginRequiredMixin, generic.ListView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -524,11 +545,14 @@ class CreateVehicleView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -551,11 +575,11 @@ class CreateVehicleView(LoginRequiredMixin, generic.CreateView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_create_vehicle_permission(request.user):
-            return redirect("denied")
+            if not self.has_create_vehicle_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -592,14 +616,17 @@ class VehicleDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_update_vehicle_permission"] = self.has_update_vehicle_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_update_vehicle_permission"] = (
+                self.has_update_vehicle_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -622,8 +649,8 @@ class VehicleDetailView(LoginRequiredMixin, generic.DetailView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -680,14 +707,17 @@ class UpdateVehicleView(LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["has_delete_vehicle_permission"] = self.has_delete_vehicle_permission(
-            self.request.user
-        )
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["has_delete_vehicle_permission"] = (
+                self.has_delete_vehicle_permission(self.request.user)
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -710,11 +740,11 @@ class UpdateVehicleView(LoginRequiredMixin, generic.UpdateView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_update_vehicle_permission(request.user):
-            return redirect("denied")
+            if not self.has_update_vehicle_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -761,11 +791,14 @@ class VehicleDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -788,10 +821,10 @@ class VehicleDeleteView(LoginRequiredMixin, generic.DeleteView):
             if not request.user.advanced.copyright:
                 return redirect("copyright")
 
-        if not self.has_disposition_access(request.user):
-            return redirect("denied")
+            if not self.has_disposition_access(request.user):
+                return redirect("denied")
 
-        if not self.has_delete_vehicle_permission(request.user):
-            return redirect("denied")
+            if not self.has_delete_vehicle_permission(request.user):
+                return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
