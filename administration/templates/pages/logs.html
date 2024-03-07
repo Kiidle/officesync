@@ -33,6 +33,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% include 'components/tabs/logs.html' with tab=request.resolver_match.url_name %}
                             {% for log in logs %}
                                 <div class="role-card">
                                     <a class="blockify" href="">
@@ -64,10 +65,22 @@
                                         </div>
                                     </a>
                                 </div>
+                            {% empty %}
+                                <div class="flexify">
+                                    <div class="access-denied">
+                                        <img src="{% static 'svgs/undraw_no_data.svg' %}" alt="access-denide" />
+                                    </div>
+                                </div>
+                                <div class="flexify">
+                                    <div class="">
+                                        <p class="access-denied">{% translate "Keine Daten vorhanden" %}</p>
+                                    </div>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </main>
+        {% include 'components/footer.html' %}
     </body>

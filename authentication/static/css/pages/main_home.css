@@ -168,6 +168,20 @@
     grid-area: right;
 }
 
+.content .blockify .flexify .tabs-logs {
+    max-width: 1024px;
+    width: 100%;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns:
+        1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "system administration communication management disposition cloud";
+}
+
 .content .blockify .flexify .tabs-profile {
     max-width: 1024px;
     width: 100%;
@@ -184,13 +198,43 @@
 
 .content .blockify .flexify .tabs-profile .public,
 .content .blockify .flexify .tabs-profile .personal,
-.content .blockify .flexify .tabs-profile .work {
+.content .blockify .flexify .tabs-profile .work,
+.content .blockify .flexify .tabs-logs .system,
+.content .blockify .flexify .tabs-logs .administration,
+.content .blockify .flexify .tabs-logs .communication,
+.content .blockify .flexify .tabs-logs .management,
+.content .blockify .flexify .tabs-logs .disposition,
+.content .blockify .flexify .tabs-logs .cloud {
     padding: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: gray;
     text-decoration: none;
+}
+
+.content .blockify .flexify .tabs-logs .system {
+    grid-area: system;
+}
+
+.content .blockify .flexify .tabs-logs .administration {
+    grid-area: administration;
+}
+
+.content .blockify .flexify .tabs-logs .communication {
+    grid-area: communication;
+}
+
+.content .blockify .flexify .tabs-logs .management {
+    grid-area: management;
+}
+
+.content .blockify .flexify .tabs-logs .disposition {
+    grid-area: disposition;
+}
+
+.content .blockify .flexify .tabs-logs .cloud {
+    grid-area: cloud;
 }
 
 .content .blockify .flexify .tabs-profile .public {
@@ -237,6 +281,7 @@
 }
 
 .content .blockify .flexify .tabs .current,
+.content .blockify .flexify .tabs-logs .current,
 .content .blockify .flexify .tabs-profile .current {
     border-bottom-color: gray;
     border-bottom-width: 2px;
@@ -266,6 +311,12 @@
 
 .content .blockify .flexify .tabs .tab1:hover,
 .content .blockify .flexify .tabs .tab2:hover,
+.content .blockify .flexify .tabs-logs .system:hover,
+.content .blockify .flexify .tabs-logs .administration:hover,
+.content .blockify .flexify .tabs-logs .communication:hover,
+.content .blockify .flexify .tabs-logs .management:hover,
+.content .blockify .flexify .tabs-logs .disposition:hover,
+.content .blockify .flexify .tabs-logs .cloud:hover,
 .content .blockify .flexify .tabs-profile .public:hover,
 .content .blockify .flexify .tabs-profile .personal:hover,
 .content .blockify .flexify .tabs-profile .work:hover   {

@@ -1,0 +1,17 @@
+{% load i18n %}
+<div class="flexify">
+   <div class="tabs-logs">
+      <a href="{% url 'logs' %}"
+         class="{% if tab == 'logs' %}system current{% else %}system{% endif %}">{% translate 'System' %}</a>
+      <a href="{% url 'logs_administration' %}"
+         class="{% if tab == 'logs_administration' %}administration current{% else %}administration{% endif %}">{% translate 'Administration' %}</a>
+      <a href="{% url 'logs_communication' %}"
+         class="{% if tab == 'logs_communication' %}communication current{% else %}communication{% endif %}">{% translate 'Kommunikation' %}</a>
+      <a href="{% url 'logs_management' %}"
+         class="{% if tab == 'logs_management' %}management current{% else %}management{% endif %}">{% translate 'Verwaltung' %}</a>
+      <a href="{% url 'logs_disposition' %}"
+         class="{% if tab == 'logs_disposition' %}disposition current{% else %}disposition{% endif %}">{% translate 'Disposition' %}</a>
+      <a href="{% url 'logs_cloud' %}"
+         class="{% if tab == 'logs_cloud' %}cloud current{% else %}cloud{% endif %}">{% translate 'Cloud' %}</a>
+   </div>
+</div>

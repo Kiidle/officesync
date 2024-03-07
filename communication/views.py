@@ -68,7 +68,17 @@ class CreateAnnouncementsView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.sender = self.request.user
         form.instance.created_at = timezone.now()
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        Log.objects.create(
+            user=self.request.user,
+            action="CREATE",
+            category="COMMUNICATION",
+            content_object=self.object,
+            message=f'@{self.request.user} hat eine Ankündigung "{self.object.title}" veröffentlicht.',
+        )
+
+        return response
 
     def get_success_url(self):
         return reverse_lazy("announcements")

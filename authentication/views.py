@@ -11,7 +11,7 @@ from administration.models import Log, Role
 from communication.models import Announcement, Message
 
 from .forms import LoginForm, SignUpForm
-from .models import AdvancedUser, Meta, OfficeSync, UserCustomInterface, Health
+from .models import AdvancedUser, Health, Meta, OfficeSync, UserCustomInterface
 
 User = get_user_model()
 
@@ -92,9 +92,9 @@ class HomeView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -131,9 +131,9 @@ class AccessDenied(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -170,9 +170,9 @@ class MaintenanceView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -228,9 +228,9 @@ class AccountView(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -267,9 +267,9 @@ class PrivacyView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -294,6 +294,7 @@ class PrivacyView(generic.ListView):
         Log.objects.create(
             user=request.user,
             action="READ",
+            category="SYSTEM",
             message=f"@{request.user} hat die Datenschutzerklärung zugestimmt.",
         )
 
@@ -312,9 +313,9 @@ class TermsView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -339,6 +340,7 @@ class TermsView(generic.ListView):
         Log.objects.create(
             user=request.user,
             action="READ",
+            category="SYSTEM",
             message=f"@{request.user} hat die Nutzungsbedingungen zugestimmt.",
         )
 
@@ -353,9 +355,9 @@ class CopyrightView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
         context["unread_announcements_count"] = self.get_unread_announcements().count()
         context["unread_messages_count"] = self.get_unread_messages().count()
         context["unread_count"] = (
@@ -380,6 +382,7 @@ class CopyrightView(generic.ListView):
         Log.objects.create(
             user=request.user,
             action="READ",
+            category="SYSTEM",
             message=f"@{request.user} hat die Urheberrechtsreglement zugestimmt.",
         )
 
