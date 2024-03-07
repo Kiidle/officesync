@@ -5,7 +5,21 @@ This platform has been developed to enable comprehensive and efficient managemen
 
 ## Table of Contents
 - [Technologies](https://github.com/Kiidle/product.officesync?tab=readme-ov-file#technologies)
+   - [Django](https://github.com/Kiidle/officesync?tab=readme-ov-file#django)
+   - [Black](https://github.com/Kiidle/officesync?tab=readme-ov-file#black)
+   - [isort](https://github.com/Kiidle/officesync?tab=readme-ov-file#isort)
+   - [flake8](https://github.com/Kiidle/officesync?tab=readme-ov-file#flake8)
+   - [Pillow](https://github.com/Kiidle/officesync?tab=readme-ov-file#pillow)
+   - [djlint](https://github.com/Kiidle/officesync?tab=readme-ov-file#djlint)
 - [Installation](https://github.com/Kiidle/product.officesync?tab=readme-ov-file#installation)
+   - [MacOS](https://github.com/Kiidle/officesync?tab=readme-ov-file#macos)
+      - [Clone Project](https://github.com/Kiidle/officesync?tab=readme-ov-file#clone-project)
+         - [Using SSH](https://github.com/Kiidle/officesync?tab=readme-ov-file#using-ssh)
+         - [Using HTTPS](https://github.com/Kiidle/officesync?tab=readme-ov-file#using-https)
+         - [Pyenv](https://github.com/Kiidle/officesync?tab=readme-ov-file#pyenv)
+         - [Django](https://github.com/Kiidle/officesync?tab=readme-ov-file#django-1)
+         - [Run Project](https://github.com/Kiidle/officesync?tab=readme-ov-file#run-project)
+         - [Test Project](https://github.com/Kiidle/officesync?tab=readme-ov-file#test-project)
 - [Contributors](https://github.com/Kiidle/product.officesync?tab=readme-ov-file#contributors)
 
 ## Technologies
