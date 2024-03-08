@@ -1,0 +1,172 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if officesync.get_logo_url %}<link rel="icon" href="{{ officesync.get_logo_url }}" type="image/png">{% endif %}
+        <link rel="stylesheet" href="{% static 'css/global/global.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/form.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/pages/main_home.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/profile.css' %}">
+        <title>{{ officesync.app }} - {% translate "Protokolle" %}</title>
+    </head>
+    <body>
+        {% include 'components/header/authentication.html' with title=officesync.app %}
+        <main>
+            {% include 'components/sidebar/sidebar.html' with page="administration" %}
+            {% include 'components/subsidebar/subsidebar_administration.html' with page="signature" %}
+            <main class="content">
+                <div class="blockify">
+                    {% include 'components/profile/profile.html' %}
+                    <div class="flexify">
+                        <div class="cardify">
+                            <div class="title-container">
+                                <h1 class="h1">{% translate "Signatur" %}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flexify">
+                        <form method="post" enctype="multipart/form-data" class="cardify">
+                            {% csrf_token %}
+                            <div class="permissions">
+                                <h2>{% translate "Signatur" %}</h2>
+                                <div class="permission-container titlefy">
+                                    <p class="value">{% translate "Wert" %}</p>
+                                    <p class="description">{% translate "Beschreibung" %}</p>
+                                    <p class="status">{% translate "Status" %}</p>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                    <p class="description">{% translate 'Vollständiger Name im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_name"
+                                               value="{{ signature.show_name }}"
+                                               {% if signature.show_name %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    {% if request.user.advanced.role %}
+                                        <p class="role" style="color: {{ request.user.advanced.role.color }}">{{ request.user.advanced.role.name }}</p>
+                                    {% else %}
+                                        <p class="role" style="color: gray";>?</p>
+                                    {% endif %}
+                                    <p class="description">{% translate 'Rolle im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_role"
+                                               value="{{ signature.show_role }}"
+                                               {% if signature.show_role %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input type="file" name="logo" accept="image/*">
+                                    <p class="description">{% translate 'Logo im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_logo"
+                                               value="{{ signature.show_logo }}"
+                                               {% if signature.show_logo %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                {% if signature.logo %}
+                                    <div class="permission-container datafy">
+                                        <img class="value"
+                                             src="{{ signature.get_logo_url }}"
+                                             alt="Logo"
+                                             style="max-width: 65px;
+                                                    max-height: 65px">
+                                        <p class="description">{% translate 'Löschen' %}</p>
+                                        <div class="permission-checkbox">
+                                            <input type="checkbox" name="remove_logo">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.corporation }}" name="corporation" />
+                                    <p class="description">{% translate 'Unternehmen im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_corporation"
+                                               value="{{ signature.show_corporation }}"
+                                               {% if signature.show_corporation %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.street }}" name="street" />
+                                    <p class="description">{% translate 'Strasse im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_street"
+                                               value="{{ signature.show_street }}"
+                                               {% if signature.show_street %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.housenumber }}" name="housenumber" />
+                                    <p class="description">{% translate 'Hausnummer im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_housenumber"
+                                               value="{{ signature.show_housenumber }}"
+                                               {% if signature.show_housenumber %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.zip }}" name="zip" />
+                                    <p class="description">{% translate 'Postleitzahl im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_zip"
+                                               value="{{ signature.show_zip }}"
+                                               {% if signature.show_zip %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.location }}" name="location" />
+                                    <p class="description">{% translate 'Ortschaft im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_location"
+                                               value="{{ signature.show_location }}"
+                                               {% if signature.show_location %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.country }}" name="country" />
+                                    <p class="description">{% translate 'Land im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_country"
+                                               value="{{ signature.show_country }}"
+                                               {% if signature.show_country %}checked{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <input class="value" value="{{ signature.url }}" name="url" />
+                                    <p class="description">{% translate 'URL im Signatur anzeigen' %}</p>
+                                    <div class="permission-checkbox">
+                                        <input type="checkbox"
+                                               name="show_url"
+                                               value="{{ signature.show_url }}"
+                                               {% if signature.show_url %}checked{% endif %}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons">
+                                <a href="{% url 'signature' %}"
+                                   class="cancel-button cancel-delete-confirm">{% translate "Abbrechen" %}</a>
+                                <button class="submit" type="submit">{% translate "Speichern" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>

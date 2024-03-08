@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 05:45+0100\n"
+"POT-Creation-Date: 2024-03-10 03:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,13 +57,72 @@ msgstr "Списак корисника"
 #: administration/templates/components/subsidebar/subsidebar_administration.html:101
 #: administration/templates/pages/logs.html:17
 #: administration/templates/pages/logs.html:32
+#: administration/templates/pages/signature/edit.html:17
+#: administration/templates/pages/signature/index.html:17
 msgid "Protokolle"
 msgstr "Протоколи"
 
 #: administration/templates/components/subsidebar/subsidebar_administration.html:113
 #: administration/templates/components/subsidebar/subsidebar_administration.html:124
+#: administration/templates/pages/signature/edit.html:38
+#: administration/templates/pages/signature/index.html:30
 msgid "Signatur"
 msgstr "Потпис"
+
+#: administration/templates/components/tabs/logs.html:5
+msgid "System"
+msgstr ""
+
+#: administration/templates/components/tabs/logs.html:7
+#: administration/templates/pages/roles/form_management_permission.html:55
+#: administration/templates/pages/roles/role_manage.html:62
+#: authentication/templates/components/sidebar/sidebar.html:42
+#: authentication/templates/components/sidebar/sidebar.html:53
+#: authentication/templates/pages/root/home.html:33
+msgid "Administration"
+msgstr "Администрација"
+
+#: administration/templates/components/tabs/logs.html:9
+#: authentication/templates/components/sidebar/sidebar.html:92
+#: authentication/templates/components/sidebar/sidebar.html:108
+#: authentication/templates/pages/root/home.html:49
+#: personal/templates/pages/profile/work/performance.html:99
+#: personal/templates/pages/profile/work/performance.html:101
+msgid "Kommunikation"
+msgstr "Комуникација"
+
+#: administration/templates/components/tabs/logs.html:11
+#: administration/templates/pages/roles/form_management_permission.html:95
+#: administration/templates/pages/roles/role_manage.html:108
+#: authentication/templates/components/sidebar/sidebar.html:126
+#: authentication/templates/pages/root/home.html:57
+msgid "Verwaltung"
+msgstr "Управа"
+
+#: administration/templates/components/tabs/logs.html:13
+#: administration/templates/pages/roles/form_management_permission.html:75
+#: administration/templates/pages/roles/role_manage.html:85
+#: authentication/templates/components/sidebar/sidebar.html:139
+#: authentication/templates/components/sidebar/sidebar.html:150
+#: authentication/templates/pages/root/home.html:65
+msgid "Disposition"
+msgstr "Распоред"
+
+#: administration/templates/components/tabs/logs.html:15
+#: authentication/templates/components/sidebar/sidebar.html:163
+#: authentication/templates/pages/root/home.html:73
+msgid "Cloud"
+msgstr "Облак"
+
+#: administration/templates/pages/logs.html:76
+#: personal/templates/pages/profile/personal/adress.html:87
+#: personal/templates/pages/profile/personal/criminal.html:102
+#: personal/templates/pages/profile/work/absence.html:102
+#: personal/templates/pages/profile/work/performance.html:134
+#: personal/templates/pages/profile/work/reprimant.html:106
+#: personal/templates/pages/profile/work/salary.html:106
+msgid "Keine Daten vorhanden"
+msgstr "Нема доступних података"
 
 #: administration/templates/pages/roles/delete_role.html:17
 #: administration/templates/pages/roles/delete_role.html:20
@@ -84,6 +143,7 @@ msgstr "Да ли сте сигурни?"
 #: administration/templates/pages/roles/form_management_permission.html:116
 #: administration/templates/pages/roles/form_role.html:49
 #: administration/templates/pages/roles/form_role_user.html:73
+#: administration/templates/pages/signature/edit.html:141
 #: authentication/templates/pages/laws/copyright.html:77
 #: authentication/templates/pages/laws/privacy.html:76
 #: authentication/templates/pages/laws/terms.html:76
@@ -114,6 +174,7 @@ msgstr "Креирајте улогу"
 #: administration/templates/pages/roles/form_management_permission.html:117
 #: administration/templates/pages/roles/form_role.html:51
 #: administration/templates/pages/roles/form_role_user.html:74
+#: administration/templates/pages/signature/edit.html:142
 #: authentication/templates/pages/settings/account.html:48
 #: disposition/templates/pages/stations/form.html:57
 #: disposition/templates/pages/vehicles/form.html:57
@@ -160,20 +221,14 @@ msgstr "Детаљи"
 msgid "Verwalten"
 msgstr "Управљати"
 
-#: administration/templates/pages/roles/form_management_permission.html:55
-#: administration/templates/pages/roles/role_manage.html:62
-#: authentication/templates/components/sidebar/sidebar.html:42
-#: authentication/templates/components/sidebar/sidebar.html:53
-#: authentication/templates/pages/root/home.html:33
-msgid "Administration"
-msgstr "Администрација"
-
 #: administration/templates/pages/roles/form_management_permission.html:57
 #: administration/templates/pages/roles/form_management_permission.html:77
 #: administration/templates/pages/roles/form_management_permission.html:97
 #: administration/templates/pages/roles/role_manage.html:64
 #: administration/templates/pages/roles/role_manage.html:87
 #: administration/templates/pages/roles/role_manage.html:110
+#: administration/templates/pages/signature/edit.html:40
+#: administration/templates/pages/signature/index.html:49
 msgid "Wert"
 msgstr "Вредност"
 
@@ -183,6 +238,8 @@ msgstr "Вредност"
 #: administration/templates/pages/roles/role_manage.html:65
 #: administration/templates/pages/roles/role_manage.html:88
 #: administration/templates/pages/roles/role_manage.html:111
+#: administration/templates/pages/signature/edit.html:41
+#: administration/templates/pages/signature/index.html:50
 msgid "Beschreibung"
 msgstr "Опис"
 
@@ -192,25 +249,123 @@ msgstr "Опис"
 #: administration/templates/pages/roles/role_manage.html:66
 #: administration/templates/pages/roles/role_manage.html:89
 #: administration/templates/pages/roles/role_manage.html:112
+#: administration/templates/pages/signature/edit.html:42
+#: administration/templates/pages/signature/index.html:51
 #: personal/templates/pages/profile/work/absence.html:80
 #: personal/templates/pages/profile/work/absence.html:82
 msgid "Status"
 msgstr "Статус"
 
-#: administration/templates/pages/roles/form_management_permission.html:75
-#: administration/templates/pages/roles/role_manage.html:85
-#: authentication/templates/components/sidebar/sidebar.html:139
-#: authentication/templates/components/sidebar/sidebar.html:150
-#: authentication/templates/pages/root/home.html:65
-msgid "Disposition"
-msgstr "Распоред"
+#: administration/templates/pages/signature/edit.html:30
+#, fuzzy
+#| msgid "Notiz bearbeiten"
+msgid "Signatur bearbeiten"
+msgstr "Изменити белешку"
 
-#: administration/templates/pages/roles/form_management_permission.html:95
-#: administration/templates/pages/roles/role_manage.html:108
-#: authentication/templates/components/sidebar/sidebar.html:126
-#: authentication/templates/pages/root/home.html:57
-msgid "Verwaltung"
-msgstr "Управа"
+#: administration/templates/pages/signature/edit.html:46
+#: administration/templates/pages/signature/index.html:55
+msgid "Vollständiger Name im Signatur anzeigen"
+msgstr "Приказати пуно име у потпису"
+
+#: administration/templates/pages/signature/edit.html:60
+#: administration/templates/pages/signature/index.html:72
+msgid "Rolle im Signatur anzeigen"
+msgstr "Приказати улогу у потпису"
+
+#: administration/templates/pages/signature/edit.html:70
+#: administration/templates/pages/signature/index.html:87
+msgid "Logo im Signatur anzeigen"
+msgstr "Приказати лого у потпису"
+
+#: administration/templates/pages/signature/edit.html:80
+#: administration/templates/pages/signature/index.html:100
+msgid "Unternehmen im Signatur anzeigen"
+msgstr "Приказати компанију у потпису"
+
+#: administration/templates/pages/signature/edit.html:90
+#: administration/templates/pages/signature/index.html:119
+msgid "Strasse im Signatur anzeigen"
+msgstr "Приказати улицу у потпису"
+
+#: administration/templates/pages/signature/edit.html:100
+#: administration/templates/pages/signature/index.html:138
+msgid "Hausnummer im Signatur anzeigen"
+msgstr "Приказати број куће у потпису"
+
+#: administration/templates/pages/signature/edit.html:110
+#: administration/templates/pages/signature/index.html:176
+msgid "Ortschaft im Signatur anzeigen"
+msgstr "Приказати место у потпису"
+
+#: administration/templates/pages/signature/edit.html:120
+#: administration/templates/pages/signature/index.html:195
+msgid "Land im Signatur anzeigen"
+msgstr "Приказати земљу у потпису"
+
+#: administration/templates/pages/signature/edit.html:130
+#: administration/templates/pages/signature/index.html:214
+msgid "URL im Signatur anzeigen"
+msgstr "Приказати URL у потпису"
+
+#: administration/templates/pages/signature/index.html:44
+msgid "Signatur für alle Konfigurieren"
+msgstr "Конфигуриши потпис за све"
+
+#: administration/templates/pages/signature/index.html:45
+msgid "Konfiguriere die Signatur und entscheide was angezeigt werden soll."
+msgstr "Конфигуриши потпис и одлучи шта ће бити приказано"
+
+#: administration/templates/pages/signature/index.html:116
+#: administration/templates/pages/signature/index.html:135
+#: administration/templates/pages/signature/index.html:154
+#: administration/templates/pages/signature/index.html:173
+#: administration/templates/pages/signature/index.html:192
+#: administration/templates/pages/signature/index.html:211
+#: disposition/models.py:79
+#: personal/templates/pages/profile/personal/criminal.html:64
+#: personal/templates/pages/profile/personal/criminal.html:69
+#: personal/templates/pages/profile/personal/criminal.html:74
+#: personal/templates/pages/profile/personal/criminal.html:79
+#: personal/templates/pages/profile/personal/criminal.html:84
+#: personal/templates/pages/profile/personal/criminal.html:89
+#: personal/templates/pages/profile/personal/health.html:63
+#: personal/templates/pages/profile/personal/health.html:68
+#: personal/templates/pages/profile/personal/health.html:73
+#: personal/templates/pages/profile/personal/health.html:78
+#: personal/templates/pages/profile/personal/health.html:83
+#: personal/templates/pages/profile/personal/meta.html:63
+#: personal/templates/pages/profile/personal/meta.html:68
+#: personal/templates/pages/profile/personal/meta.html:73
+#: personal/templates/pages/profile/personal/meta.html:78
+#: personal/templates/pages/profile/work/absence.html:64
+#: personal/templates/pages/profile/work/absence.html:69
+#: personal/templates/pages/profile/work/absence.html:74
+#: personal/templates/pages/profile/work/absence.html:82
+#: personal/templates/pages/profile/work/absence.html:89
+#: personal/templates/pages/profile/work/performance.html:64
+#: personal/templates/pages/profile/work/performance.html:71
+#: personal/templates/pages/profile/work/performance.html:76
+#: personal/templates/pages/profile/work/performance.html:81
+#: personal/templates/pages/profile/work/performance.html:86
+#: personal/templates/pages/profile/work/performance.html:91
+#: personal/templates/pages/profile/work/performance.html:96
+#: personal/templates/pages/profile/work/performance.html:101
+#: personal/templates/pages/profile/work/performance.html:106
+#: personal/templates/pages/profile/work/performance.html:111
+#: personal/templates/pages/profile/work/performance.html:116
+#: personal/templates/pages/profile/work/performance.html:121
+#: personal/templates/pages/profile/work/reprimant.html:83
+#: personal/templates/pages/profile/work/reprimant.html:88
+#: personal/templates/pages/profile/work/reprimant.html:93
+#: personal/templates/pages/profile/work/salary.html:64
+#: personal/templates/pages/profile/work/salary.html:69
+#: personal/templates/pages/profile/work/salary.html:76
+msgid "Unbekannt"
+msgstr "Непознато"
+
+#: administration/templates/pages/signature/index.html:157
+msgid "Postleitzahl im Signatur anzeigen"
+msgstr "Приказати поштански број у потпису"
 
 #: administration/templates/pages/system.html:45 communication/models.py:25
 msgid "Logo"
@@ -409,19 +564,6 @@ msgstr "Почетна страница"
 #: authentication/templates/pages/root/home.html:41
 msgid "Persönlich"
 msgstr "Лично"
-
-#: authentication/templates/components/sidebar/sidebar.html:92
-#: authentication/templates/components/sidebar/sidebar.html:108
-#: authentication/templates/pages/root/home.html:49
-#: personal/templates/pages/profile/work/performance.html:99
-#: personal/templates/pages/profile/work/performance.html:101
-msgid "Kommunikation"
-msgstr "Комуникација"
-
-#: authentication/templates/components/sidebar/sidebar.html:163
-#: authentication/templates/pages/root/home.html:73
-msgid "Cloud"
-msgstr "Облак"
 
 #: authentication/templates/components/sidebar/sidebar.html:174
 msgid "Impressum"
@@ -1257,48 +1399,6 @@ msgstr "Година производње"
 msgid "Identifikationsnummer"
 msgstr "Идентификациони број"
 
-#: disposition/models.py:79
-#: personal/templates/pages/profile/personal/criminal.html:64
-#: personal/templates/pages/profile/personal/criminal.html:69
-#: personal/templates/pages/profile/personal/criminal.html:74
-#: personal/templates/pages/profile/personal/criminal.html:79
-#: personal/templates/pages/profile/personal/criminal.html:84
-#: personal/templates/pages/profile/personal/criminal.html:89
-#: personal/templates/pages/profile/personal/health.html:63
-#: personal/templates/pages/profile/personal/health.html:68
-#: personal/templates/pages/profile/personal/health.html:73
-#: personal/templates/pages/profile/personal/health.html:78
-#: personal/templates/pages/profile/personal/health.html:83
-#: personal/templates/pages/profile/personal/meta.html:63
-#: personal/templates/pages/profile/personal/meta.html:68
-#: personal/templates/pages/profile/personal/meta.html:73
-#: personal/templates/pages/profile/personal/meta.html:78
-#: personal/templates/pages/profile/work/absence.html:64
-#: personal/templates/pages/profile/work/absence.html:69
-#: personal/templates/pages/profile/work/absence.html:74
-#: personal/templates/pages/profile/work/absence.html:82
-#: personal/templates/pages/profile/work/absence.html:89
-#: personal/templates/pages/profile/work/performance.html:64
-#: personal/templates/pages/profile/work/performance.html:71
-#: personal/templates/pages/profile/work/performance.html:76
-#: personal/templates/pages/profile/work/performance.html:81
-#: personal/templates/pages/profile/work/performance.html:86
-#: personal/templates/pages/profile/work/performance.html:91
-#: personal/templates/pages/profile/work/performance.html:96
-#: personal/templates/pages/profile/work/performance.html:101
-#: personal/templates/pages/profile/work/performance.html:106
-#: personal/templates/pages/profile/work/performance.html:111
-#: personal/templates/pages/profile/work/performance.html:116
-#: personal/templates/pages/profile/work/performance.html:121
-#: personal/templates/pages/profile/work/reprimant.html:83
-#: personal/templates/pages/profile/work/reprimant.html:88
-#: personal/templates/pages/profile/work/reprimant.html:93
-#: personal/templates/pages/profile/work/salary.html:64
-#: personal/templates/pages/profile/work/salary.html:69
-#: personal/templates/pages/profile/work/salary.html:76
-msgid "Unbekannt"
-msgstr "Непознато"
-
 #: disposition/models.py:80
 #: disposition/templates/pages/vehicles/vehicle.html:221
 msgid "Leistung & Motor"
@@ -1557,15 +1657,6 @@ msgstr "До"
 #: personal/templates/pages/profile/personal/adress.html:74
 msgid "Jetzt"
 msgstr "Сада"
-
-#: personal/templates/pages/profile/personal/adress.html:87
-#: personal/templates/pages/profile/personal/criminal.html:102
-#: personal/templates/pages/profile/work/absence.html:102
-#: personal/templates/pages/profile/work/performance.html:134
-#: personal/templates/pages/profile/work/reprimant.html:106
-#: personal/templates/pages/profile/work/salary.html:106
-msgid "Keine Daten vorhanden"
-msgstr "Нема доступних података"
 
 #: personal/templates/pages/profile/personal/criminal.html:60
 msgid "Auszug"

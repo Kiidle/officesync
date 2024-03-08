@@ -32,7 +32,7 @@ class Signature(models.Model):
     location = models.CharField(
         max_length=50, null=True, blank=True, verbose_name=_("Ort")
     )
-    show_Location = models.BooleanField(default=True, verbose_name=_("Ort anzeigen"))
+    show_location = models.BooleanField(default=True, verbose_name=_("Ort anzeigen"))
     zip = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("PLZ"))
     show_zip = models.BooleanField(default=True, verbose_name=_("PLZ anzeigen"))
     street = models.CharField(

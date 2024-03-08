@@ -17,7 +17,9 @@ from .views import (
     RolesView,
     RoleUpdateView,
     RoleUsersView,
+    SignatureView,
     SystemView,
+    UpdateSignatureView,
     UsersView,
 )
 
@@ -74,4 +76,6 @@ urlpatterns = [
         LogsCloudView.as_view(),
         name="logs_cloud",
     ),
+    path("signature", SignatureView.as_view(), name="signature"),
+    path("signature/<int:pk>", UpdateSignatureView.as_view(), name="signature_update"),
 ]

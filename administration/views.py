@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from authentication.models import AdvancedUser, OfficeSync
-from communication.models import Announcement, Message
+from communication.models import Announcement, Message, Signature
 
 from .models import CustomPermission, Log, Role
 
@@ -1380,6 +1380,186 @@ class LogsCloudView(LoginRequiredMixin, generic.ListView):
                 return redirect("denied")
 
             if not self.has_logs_access(request.user):
+                return redirect("denied")
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class SignatureView(LoginRequiredMixin, generic.ListView):
+    model = User
+    fields = []
+    template_name = "pages/signature/index.html"
+
+    def has_administration_access(self, user):
+        return user.advanced.role.permissions.filter(
+            permission="system.access"
+        ).exists()
+
+    def has_config_signature(self, user):
+        return user.advanced.role.permissions.filter(
+            permission="system.communication.signature"
+        ).exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        context["signature"] = Signature.objects.first()
+        if self.request.user.is_authenticated:
+            context["has_config_signature"] = self.has_config_signature(
+                self.request.user
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+        return context
+
+    def get_unread_announcements(self):
+        return Announcement.objects.exclude(read_by=self.request.user)
+
+    def get_unread_messages(self):
+        return Message.objects.filter(receiver=self.request.user, receiver_read=False)
+
+    def get_read_messages(self):
+        return Message.objects.filter(receiver=self.request.user, receiver_read=True)
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if not request.user.advanced.privacy:
+                return redirect("privacy")
+
+            if not request.user.advanced.terms:
+                return redirect("terms")
+
+            if not request.user.advanced.copyright:
+                return redirect("copyright")
+
+            if not self.has_administration_access(request.user):
+                return redirect("denied")
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UpdateSignatureView(LoginRequiredMixin, generic.UpdateView):
+    model = Signature
+    fields = [
+        "show_name",
+        "show_role",
+        "corporation",
+        "show_corporation",
+        "logo",
+        "show_logo",
+        "country",
+        "show_country",
+        "location",
+        "show_location",
+        "zip",
+        "show_zip",
+        "street",
+        "show_street",
+        "housenumber",
+        "show_housenumber",
+        "url",
+        "show_url",
+    ]
+    template_name = "pages/signature/edit.html"
+
+    def has_administration_access(self, user):
+        return user.advanced.role.permissions.filter(
+            permission="system.access"
+        ).exists()
+
+    def has_config_signature(self, user):
+        return user.advanced.role.permissions.filter(
+            permission="system.communication.signature"
+        ).exists()
+
+    def get_success_url(self):
+        return reverse_lazy("signature")
+
+    def form_valid(self, form):
+        signature = form.save(commit=False)
+
+        signature.show_name = "show_name" in self.request.POST
+        signature.show_role = "show_role" in self.request.POST
+        if "remove_logo" in self.request.POST:
+            signature.logo = None
+        elif "logo" in self.request.FILES:
+            signature.logo = self.request.FILES["logo"]
+        signature.show_logo = "show_logo" in self.request.POST
+        signature.corporation = form.cleaned_data["corporation"]
+        signature.show_corporation = "show_corporation" in self.request.POST
+        signature.country = form.cleaned_data["country"]
+        signature.show_country = "show_country" in self.request.POST
+        signature.location = form.cleaned_data["location"]
+        signature.show_location = "show_location" in self.request.POST
+        signature.zip = form.cleaned_data["zip"]
+        signature.show_zip = "show_zip" in self.request.POST
+        signature.street = form.cleaned_data["street"]
+        signature.show_street = "show_street" in self.request.POST
+        signature.housenumber = form.cleaned_data["housenumber"]
+        signature.show_housenumber = "show_housenumber" in self.request.POST
+        signature.url = form.cleaned_data["url"]
+        signature.show_url = "show_url" in self.request.POST
+
+        signature.save()
+
+        Log.objects.create(
+            user=self.request.user,
+            action="UPDATE",
+            category="ADMINISTRATION",
+            content_object=signature,
+            message=f"@{self.request.user} hat die Signatur angepasst.",
+        )
+
+        return super(UpdateSignatureView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["officesync"] = OfficeSync.objects.first()
+        context["signature"] = Signature.objects.first()
+        if self.request.user.is_authenticated:
+            context["has_config_signature"] = self.has_config_signature(
+                self.request.user
+            )
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+        return context
+
+    def get_unread_announcements(self):
+        return Announcement.objects.exclude(read_by=self.request.user)
+
+    def get_unread_messages(self):
+        return Message.objects.filter(receiver=self.request.user, receiver_read=False)
+
+    def get_read_messages(self):
+        return Message.objects.filter(receiver=self.request.user, receiver_read=True)
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if not request.user.advanced.privacy:
+                return redirect("privacy")
+
+            if not request.user.advanced.terms:
+                return redirect("terms")
+
+            if not request.user.advanced.copyright:
+                return redirect("copyright")
+
+            if not self.has_administration_access(request.user):
+                return redirect("denied")
+
+            if not self.has_config_signature(request.user):
                 return redirect("denied")
 
         return super().dispatch(request, *args, **kwargs)
