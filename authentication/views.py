@@ -95,11 +95,14 @@ class HomeView(LoginRequiredMixin, generic.ListView):
         context["officesync"] = (
             OfficeSync.objects.first()
         )  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -203,7 +206,7 @@ class MaintenanceView(LoginRequiredMixin, generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AccountView(generic.UpdateView):
+class AccountView(LoginRequiredMixin, generic.UpdateView):
     model = User
     fields = ["first_name", "last_name", "email", "username"]
     template_name = "pages/settings/account.html"
@@ -231,11 +234,14 @@ class AccountView(generic.UpdateView):
         context["officesync"] = (
             OfficeSync.objects.first()
         )  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -270,11 +276,14 @@ class PrivacyView(generic.ListView):
         context["officesync"] = (
             OfficeSync.objects.first()
         )  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -316,11 +325,14 @@ class TermsView(generic.ListView):
         context["officesync"] = (
             OfficeSync.objects.first()
         )  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -358,11 +370,14 @@ class CopyrightView(generic.ListView):
         context["officesync"] = (
             OfficeSync.objects.first()
         )  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):

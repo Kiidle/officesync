@@ -27,13 +27,16 @@ class AnnouncementsView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements"] = self.get_unread_announcements()
-        context["read_announcements"] = self.get_read_announcements()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements"] = self.get_unread_announcements()
+            context["read_announcements"] = self.get_read_announcements()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
 
         return context
 
@@ -86,11 +89,14 @@ class CreateAnnouncementsView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -121,13 +127,16 @@ class AnnouncementView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["signature"] = Signature.objects.first()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["show_read_button"] = not self.has_been_read_by(self.request.user)
+        if self.request.user.is_authenticated:
+            context["signature"] = Signature.objects.first()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["show_read_button"] = not self.has_been_read_by(self.request.user)
         return context
 
     def has_been_read_by(self, user):
@@ -174,14 +183,17 @@ class InboxView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_message_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_message_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -220,14 +232,17 @@ class InboxMessageView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["signature"] = Signature.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["signature"] = Signature.objects.first()
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def post(self, request, *args, **kwargs):
@@ -299,14 +314,17 @@ class SelectUserView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["search_query"] = self.request.GET.get("search", "")
+        if self.request.user.is_authenticated:
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["search_query"] = self.request.GET.get("search", "")
         return context
 
     def get_unread_announcements(self):
@@ -332,7 +350,7 @@ class SelectUserView(LoginRequiredMixin, generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CreateMessageView(generic.CreateView):
+class CreateMessageView(LoginRequiredMixin, generic.CreateView):
     model = Message
     fields = ["title", "content"]
     template_name = "pages/inbox/create.html"
@@ -354,13 +372,16 @@ class CreateMessageView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -398,13 +419,16 @@ class OutboxView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -438,14 +462,17 @@ class OutboxMessageView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["signature"] = Signature.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["signature"] = Signature.objects.first()
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -485,13 +512,16 @@ class ArchiveView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -525,14 +555,17 @@ class ArchiveMessageView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["officesync"] = OfficeSync.objects.first()
-        context["signature"] = Signature.objects.first()
-        context["unread_messages"] = self.get_unread_messages()
-        context["read_messages"] = self.get_read_messages()
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        if self.request.user.is_authenticated:
+            context["signature"] = Signature.objects.first()
+            context["unread_messages"] = self.get_unread_messages()
+            context["read_messages"] = self.get_read_messages()
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):

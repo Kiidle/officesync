@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -11,21 +12,24 @@ User = get_user_model()
 
 
 # Create your views here.
-class ProfileView(generic.ListView):
+class ProfileView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -54,7 +58,7 @@ class ProfileView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileUpdateView(generic.UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = AdvancedUser
     fields = [
         "biographie",
@@ -82,15 +86,18 @@ class ProfileUpdateView(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -119,21 +126,24 @@ class ProfileUpdateView(generic.UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class PersonalView(generic.ListView):
+class PersonalView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/personal.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -162,21 +172,24 @@ class PersonalView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class MetaView(generic.ListView):
+class MetaView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/personal/meta.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -205,21 +218,24 @@ class MetaView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AdressView(generic.ListView):
+class AdressView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/personal/adress.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -248,21 +264,24 @@ class AdressView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class HealthView(generic.ListView):
+class HealthView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/personal/health.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -291,21 +310,24 @@ class HealthView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CriminalView(generic.ListView):
+class CriminalView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/personal/criminal.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -334,21 +356,24 @@ class CriminalView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class WorkView(generic.ListView):
+class WorkView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/work.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -377,21 +402,24 @@ class WorkView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class SalaryView(generic.ListView):
+class SalaryView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/work/salary.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -427,21 +455,24 @@ class SalaryView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AbsenceView(generic.ListView):
+class AbsenceView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/work/absence.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -470,21 +501,24 @@ class AbsenceView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class PerformanceView(generic.ListView):
+class PerformanceView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/work/performance.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -513,21 +547,24 @@ class PerformanceView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ReprimantView(generic.ListView):
+class ReprimantView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "pages/profile/work/reprimant.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
-        context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
+            context["unconfirmed_salaries_count"] = self.get_unconfirmed_salaries()
         return context
 
     def get_unread_announcements(self):
@@ -556,21 +593,24 @@ class ReprimantView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class NotesView(generic.ListView):
+class NotesView(LoginRequiredMixin, generic.ListView):
     model = Note
     template_name = "pages/notes/index.html"
     context_object_name = "notes"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
@@ -596,7 +636,7 @@ class NotesView(generic.ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class NoteUpdateView(generic.UpdateView):
+class NoteUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Note
     fields = ["title", "content", "color"]
     template_name = "pages/notes/update.html"
@@ -606,14 +646,17 @@ class NoteUpdateView(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context[
-            "officesync"
-        ] = OfficeSync.objects.first()  # Hole das erste OfficeSync-Objekt
-        context["unread_announcements_count"] = self.get_unread_announcements().count()
-        context["unread_messages_count"] = self.get_unread_messages().count()
-        context["unread_count"] = (
-            context["unread_announcements_count"] + context["unread_messages_count"]
-        )
+        context["officesync"] = (
+            OfficeSync.objects.first()
+        )  # Hole das erste OfficeSync-Objekt
+        if self.request.user.is_authenticated:
+            context["unread_announcements_count"] = (
+                self.get_unread_announcements().count()
+            )
+            context["unread_messages_count"] = self.get_unread_messages().count()
+            context["unread_count"] = (
+                context["unread_announcements_count"] + context["unread_messages_count"]
+            )
         return context
 
     def get_unread_announcements(self):
