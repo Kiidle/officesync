@@ -1,0 +1,270 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if officesync.get_logo_url %}<link rel="icon" href="{{ officesync.get_logo_url }}" type="image/png">{% endif %}
+        <link rel="stylesheet" href="{% static 'css/global/global.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/header.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/form.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/pages/main_home.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/profile.css' %}">
+        <title>{{ officesync.app }} - {% translate "Protokolle" %}</title>
+    </head>
+    <body>
+        {% include 'components/header/authentication.html' with title=officesync.app %}
+        <main>
+            {% include 'components/sidebar/sidebar.html' with page="administration" %}
+            {% include 'components/subsidebar/subsidebar_administration.html' with page="signature" %}
+            <main class="content">
+                <div class="blockify">
+                    {% include 'components/profile/profile.html' %}
+                    <div class="flexify">
+                        <div class="cardify">
+                            <div class="title-container">
+                                <h1 class="h1">{% translate "Signatur" %}</h1>
+                                <div class="edit-container">
+                                    {% if has_config_signature %}
+                                        <a class="button edit" href="{% url 'signature_update' signature.pk %}">
+                                            <img src="{% static 'svgs/modify.svg' %}" alt="edit" />
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flexify">
+                        <div class="cardify">
+                            <div class="permissions">
+                                <h2>{% translate "Signatur für alle Konfigurieren" %}</h2>
+                                <p class="datafy">{% translate "Konfiguriere die Signatur und entscheide was angezeigt werden soll." %}</p>
+                            </div>
+                            <div class="permissions">
+                                <div class="permission-container titlefy">
+                                    <p class="value">{% translate "Wert" %}</p>
+                                    <p class="description">{% translate "Beschreibung" %}</p>
+                                    <p class="status">{% translate "Status" %}</p>
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                    <p class="description">{% translate 'Vollständiger Name im Signatur anzeigen' %}</p>
+                                    {% if signature.show_name %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    {% if request.user.advanced.role %}
+                                        <p class="role" style="color: {{ request.user.advanced.role.color }}">{{ request.user.advanced.role.name }}</p>
+                                    {% else %}
+                                        <p class="role" style="color: gray";>?</p>
+                                    {% endif %}
+                                    <p class="description">{% translate 'Rolle im Signatur anzeigen' %}</p>
+                                    {% if signature.show_role %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value" style="display: flex; height: 20px">
+                                        <img class="signature-logo" src="{{ signature.get_logo_url }}" alt="logo" />
+                                    </p>
+                                    <p class="description">{% translate 'Logo im Signatur anzeigen' %}</p>
+                                    {% if signature.show_logo %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">{{ signature.corporation }}</p>
+                                    <p class="description">{% translate 'Unternehmen im Signatur anzeigen' %}</p>
+                                    {% if signature.show_corporation %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.street %}
+                                            {{ signature.street }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'Strasse im Signatur anzeigen' %}</p>
+                                    {% if signature.show_street %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.housenumber %}
+                                            {{ signature.housenumber }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'Hausnummer im Signatur anzeigen' %}</p>
+                                    {% if signature.show_housenumber %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.zip %}
+                                            {{ signature.zip }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'Postleitzahl im Signatur anzeigen' %}</p>
+                                    {% if signature.show_zip %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.location %}
+                                            {{ signature.location }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'Ortschaft im Signatur anzeigen' %}</p>
+                                    {% if signature.show_location %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.country %}
+                                            {{ signature.country }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'Land im Signatur anzeigen' %}</p>
+                                    {% if signature.show_country %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="permission-container datafy">
+                                    <p class="value">
+                                        {% if signature.url %}
+                                            {{ signature.url }}
+                                        {% else %}
+                                            {% translate 'Unbekannt' %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="description">{% translate 'URL im Signatur anzeigen' %}</p>
+                                    {% if signature.show_url %}
+                                        <div class="permission-check checked">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% else %}
+                                        <div class="permission-check">
+                                            <img src="{% static 'svgs/check-circle.svg' %}" alt="check" />
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="signature-grid">
+                                {% if signature.show_name %}<p class="name">{{ request.user.first_name }} {{ request.user.last_name }}</p>{% endif %}
+                                {% if signature.show_role %}
+                                    {% if request.user.advanced.role %}
+                                        <p class="role" style="color: {{ request.user.advanced.role.color }}">{{ request.user.advanced.role.name }}</p>
+                                    {% else %}
+                                        <p class="role" style="color: gray";>?</p>
+                                    {% endif %}
+                                {% endif %}
+                                {% if signature.show_logo %}
+                                    {% if signature.get_logo_url %}<img class="signature-logo" src="{{ signature.get_logo_url }}" alt="logo" />{% endif %}
+                                {% endif %}
+                                {% if signature.show_corporation %}<p class="corporation">{{ signature.corporation }}</p>{% endif %}
+                                <p class="address">
+                                    {% if signature.show_street %}
+                                        {% if signature.street %}{{ signature.street }}{% endif %}
+                                    {% endif %}
+                                    {% if signature.show_housenumber %}
+                                        {% if signature.housenumber %}{{ signature.housenumber }}{% endif %}
+                                    {% endif %}
+                                </p>
+                                <p class="location">
+                                    {% if signature.show_zip %}
+                                        {% if signature.zip %}{{ signature.zip }}{% endif %}
+                                    {% endif %}
+                                    {% if signature.show_location %}
+                                        {% if signature.location %}{{ signature.location }}{% endif %}
+                                    {% endif %}
+                                </p>
+                                {% if signature.show_country %}
+                                    <p class="country">
+                                        {% if signature.country %}{{ signature.country }}{% endif %}
+                                    </p>
+                                {% endif %}
+                                {% if signature.show_url %}
+                                    <p class="url">
+                                        {% if signature.url %}{{ signature.url }}{% endif %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </body>
