@@ -22,7 +22,7 @@ This platform has been developed to enable comprehensive and efficient managemen
          - [Test Project](https://github.com/Kiidle/officesync?tab=readme-ov-file#test-project)
 - [Contributors](https://github.com/Kiidle/product.officesync?tab=readme-ov-file#contributors)
 
-## Technologies
+## Technology
 ### Django
 "OfficeSync" was developed using the Django technology. Django is a popular web framework that is widely used for building high-quality web applications quickly and efficiently. It provides a powerful and secure infrastructure for developing complex applications, and it is known for its scalability and flexibility. With Django, developers can easily create web applications with clean and maintainable code, making it a popular choice for building web applications. The use of Django in the development of "OfficeSync" ensures that the app is reliable, secure, and easy to maintain.
 
